@@ -4,8 +4,35 @@
 
 {% block content %}
     <section class="hero">
-        <h1>Selamat Datang di Rantaoe Films</h1>
-        <p>Mewujudkan Cerita Anda Melalui Lensa Kami.</p>
-        <a href="/portfolio" class="cta-button">Lihat Karya Kami</a>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <h1>Seni Bercerita Visual</h1>
+            <p>Kami mengubah momen menjadi kenangan sinematik abadi. Dari pernikahan hingga profil perusahaan, cerita Anda adalah mahakarya kami.</p>
+            <a href="/portfolio" class="cta-button">Jelajahi Karya Kami</a>
+        </div>
+    </section>
+
+    <section class="featured-work container">
+        <h2>Karya Unggulan</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <img src="{{ url_for('static', filename='images/wedding1.jpg') }}" alt="Wedding Clip">
+                <div class="card-overlay">
+                    <h3>Wedding Clip: A & B</h3>
+                </div>
+            </div>
+             <div class="project-card">
+                <img src="{{ url_for('static', filename='images/company1.jpg') }}" alt="Company Profile">
+                 <div class="card-overlay">
+                    <h3>Company Profile: XYZ Corp</h3>
+                </div>
+            </div>
+             <div class="project-card">
+                <img src="{{ url_for('static', filename='images/film1.jpg') }}" alt="Short Film">
+                 <div class="card-overlay">
+                    <h3>Short Film: "Jendela"</h3>
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock %}

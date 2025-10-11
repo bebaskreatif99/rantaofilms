@@ -3,16 +3,52 @@
 {% block title %}Portfolio - Rantaoe Films{% endblock %}
 
 {% block content %}
-    <section class="portfolio-gallery">
-        <h2>Galeri Karya Kami</h2>
-        <div class="projects-grid">
-            {% for project in projects %}
-            <div class="project-card">
-                <img src="{{ url_for('static', filename='images/' + project.image) }}" alt="{{ project.title }}">
+<section class="portfolio-page container">
+    <h2>Semua Karya</h2>
+    <p>Setiap proyek adalah cerita unik yang kami banggakan.</p>
+
+    <div id="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="wedding">Wedding</button>
+        <button class="filter-btn" data-filter="corporate">Corporate</button>
+        <button class="filter-btn" data-filter="film">Film</button>
+    </div>
+
+    <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card" data-category="{{ project.category.lower() }}">
+            <img src="{{ url_for('static', filename='images/' + project.image) }}" alt="{{ project.title }}">
+            <div class="card-overlay">
                 <h3>{{ project.title }}</h3>
                 <p>{{ project.category }}</p>
             </div>
-            {% endfor %}
         </div>
-    </section>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Handle active button style
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

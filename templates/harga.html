@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block title %}Price List - Rantaoe Films{% endblock %}
+
+{% block content %}
+<section class="pricing-page container">
+    <h2>Paket Layanan</h2>
+    <p>Kami menawarkan paket yang fleksibel untuk memenuhi kebutuhan unik Anda.</p>
+
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3>Paket Silver</h3>
+            <p class="price">Mulai dari <span>Rp X.XXX.XXX</span></p>
+            <ul>
+                <li><i class="fas fa-check"></i> 1 Videografer</li>
+                <li><i class="fas fa-check"></i> Durasi Liputan 4 Jam</li>
+                <li><i class="fas fa-check"></i> Video Highlight 1 Menit</li>
+                <li><i class="fas fa-times"></i> Drone Footage</li>
+            </ul>
+            <a href="/tentang" class="cta-button">Hubungi Kami</a>
+        </div>
+
+        <div class="pricing-card featured">
+            <div class="featured-tag">Populer</div>
+            <h3>Paket Gold</h3>
+            <p class="price">Mulai dari <span>Rp XX.XXX.XXX</span></p>
+            <ul>
+                <li><i class="fas fa-check"></i> 2 Videografer</li>
+                <li><i class="fas fa-check"></i> Durasi Liputan 8 Jam</li>
+                <li><i class="fas fa-check"></i> Video Highlight 3-5 Menit</li>
+                <li><i class="fas fa-check"></i> Drone Footage</li>
+            </ul>
+            <a href="/tentang" class="cta-button">Hubungi Kami</a>
+        </div>
+
+        <div class="pricing-card">
+            <h3>Paket Platinum</h3>
+            <p class="price">Mulai dari <span>Rp XX.XXX.XXX</span></p>
+            <ul>
+                <li><i class="fas fa-check"></i> 2 Videografer + 1 Asisten</li>
+                <li><i class="fas fa-check"></i> Liputan Seharian Penuh</li>
+                <li><i class="fas fa-check"></i> Video Sinematik 5-7 Menit</li>
+                <li><i class="fas fa-check"></i> Drone Footage & Same Day Edit</li>
+            </ul>
+            <a href="/tentang" class="cta-button">Hubungi Kami</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
