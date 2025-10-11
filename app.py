@@ -37,6 +37,22 @@ projects_data = [
             "img/portfolio/graduation (9).jpg"
         ],
         "is_featured": True, # Atur True jika ingin tampil di halaman utama
+        
+    },
+
+    {
+        "id": 7, "slug": "elegansi-dalam-hening-wedding", "title": "Elegansi dalam Hening",
+        "description": "Sebuah potret pernikahan yang menangkap keindahan dan ketenangan momen sakral. Dengan pencahayaan dramatis dan fokus pada detail, setiap foto menceritakan kisah keanggunan yang tak lekang oleh waktu.",
+        "category": "Wedding",
+        "cover_image": "img/portfolio/wedding (4).jpg", # Gambar sampul
+        "project_date": "18 Oktober 2025",
+        "video_url": None,
+        "images": [ # Daftar gambar untuk galeri
+            "img/portfolio/wedding (1).jpg",
+            "img/portfolio/wedding (2).jpg",
+            "img/portfolio/wedding (3).jpg"
+        ],
+        "is_featured": True, # Tampil di halaman utama
     },
 ]
 
