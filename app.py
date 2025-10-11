@@ -1,80 +1,85 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request, redirect, url_for
 from datetime import datetime
-import contentful # Library baru untuk koneksi ke Contentful
 
 app = Flask(__name__)
 
-# --- Kunci API dari Contentful ---
-# (Kita akan menyimpannya di Vercel, bukan di sini)
-import os
-SPACE_ID = os.environ.get('CONTENTFUL_SPACE_ID')
-DELIVERY_API_KEY = os.environ.get('CONTENTFUL_DELIVERY_API_KEY')
+# =====================================================================
+# DATA SIMULASI (Pengganti Database)
+# =====================================================================
 
-# --- Inisialisasi Klien Contentful ---
-try:
-    client = contentful.Client(SPACE_ID, DELIVERY_API_KEY)
-except Exception as e:
-    client = None
-    print(f"Error initializing Contentful client: {e}")
+site_data = {
+    "instagram_url": "https://www.instagram.com/NAMA_INSTAGRAM_ANDA",
+    "tiktok_url": "https://www.tiktok.com/@NAMA_TIKTOK_ANDA",
+    "whatsapp_url": "https://wa.me/6281234567890", # Ganti dengan nomor Anda
+    "logo": "img/logo.png",
+    "team_photo": "img/tim-rantaofilms.png"
+}
+
+projects_data = [
+    {
+        "id": 1, "slug": "penantian-yang-indah-wedding", "title": "Penantian yang Indah",
+        "description": "Sebuah perayaan cinta yang sakral dan intim, menangkap setiap tatapan penuh makna dan senyum bahagia dari pasangan mempelai. Konsep sinematik dengan sentuhan hangat dan natural.",
+        "category": "Wedding", "cover_image": "img/portfolio/wedding-1.jpg",
+        "project_date": "15 Agustus 2025", "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "images": ["img/portfolio/wedding-1-gallery-1.jpg", "img/portfolio/wedding-1-gallery-2.jpg"],
+        "is_featured": True,
+    },
+    {
+        "id": 2, "slug": "senja-di-atas-awan-prewedding", "title": "Senja di Atas Awan",
+        "description": "Kisah cinta yang dilukis oleh alam. Sesi pre-wedding di puncak bukit, menangkap siluet romantis dengan latar belakang matahari terbenam yang dramatis.",
+        "category": "Pre-Wedding", "cover_image": "img/portfolio/prewed-1.jpg",
+        "project_date": "20 Juli 2025", "video_url": None,
+        "images": ["img/portfolio/prewed-1-gallery-1.jpg"], "is_featured": True,
+    },
+    {
+        "id": 3, "slug": "langkah-baru-graduation", "title": "Langkah Baru",
+        "description": "Merayakan akhir dari sebuah perjuangan dan awal dari petualangan baru. Sesi foto wisuda yang ceria dan penuh harapan bersama keluarga tercinta.",
+        "category": "Graduation", "cover_image": "img/portfolio/graduation-1.jpg",
+        "project_date": "10 September 2025", "video_url": None, "images": [], "is_featured": False,
+    },
+    {
+        "id": 4, "slug": "energi-nusantara-event", "title": "Energi Nusantara",
+        "description": "Dokumentasi lengkap dari acara gathering korporat tahunan, menangkap semangat kolaborasi, pidato inspiratif, dan momen kebersamaan tim.",
+        "category": "Event", "cover_image": "img/portfolio/event-1.jpg",
+        "project_date": "05 Juni 2025", "video_url": None, "images": [], "is_featured": True,
+    },
+    {
+        "id": 5, "slug": "rasa-kopi-nusantara-branding", "title": "Rasa Kopi Nusantara",
+        "description": "Visual branding untuk produk kopi lokal, menampilkan kehangatan dan kekayaan cita rasa asli Indonesia.",
+        "category": "Branding", "cover_image": "img/portfolio/branding-1.jpg",
+        "project_date": "01 Mei 2025", "video_url": None, "images": [], "is_featured": False,
+    },
+]
 
 # =====================================================================
-# FUNGSI BANTUAN
+# FUNGSI BANTUAN (Context Processor)
 # =====================================================================
-def map_project_entry(entry):
-    """Mengubah format data dari Contentful agar sesuai dengan template kita."""
-    fields = entry.fields()
-    return {
-        'id': entry.sys['id'],
-        'slug': fields.get('slug', entry.sys['id']), # Asumsi ada field slug
-        'title': fields.get('title'),
-        'description': fields.get('description'),
-        'category': fields.get('category'),
-        'cover_image': fields.get('cover_image').url() if fields.get('cover_image') else None,
-        'project_date': fields.get('project_date'),
-        'video_url': fields.get('video_url'),
-        'is_featured': fields.get('is_featured', False),
-    }
-
 @app.context_processor
 def inject_global_vars():
-    # Ambil data global dari CMS jika ada, atau gunakan default
     return {
         'current_year': datetime.utcnow().year,
-        'site': {
-            "instagram_url": "https://www.instagram.com/NAMA_INSTAGRAM_ANDA",
-            "tiktok_url": "https://www.tiktok.com/@NAMA_TIKTOK_ANDA",
-            "whatsapp_url": "https://wa.me/6281234567890",
-            "logo": "img/logo.png", # Logo tetap file statis
-            "team_photo": "img/tim-rantaofilms.png"
-        }
+        'site': site_data
     }
 
 # =====================================================================
-# RUTE APLIKASI
+# RUTE APLIKASI (Controller)
 # =====================================================================
 @app.route('/')
 def home():
-    if not client: return "Error: Cannot connect to Contentful.", 500
-    
-    # Ambil proyek yang is_featured = true dari Contentful
-    featured_entries = client.entries({
-        'content_type': 'project', # Sesuaikan dengan ID Content Type Anda
-        'fields.is_featured': True
-    })
-    featured_projects = [map_project_entry(entry) for entry in featured_entries]
+    featured_projects = [p for p in projects_data if p['is_featured']]
     return render_template('index.html', featured_projects=featured_projects)
 
 @app.route('/portfolio')
 def portfolio():
-    if not client: return "Error: Cannot connect to Contentful.", 500
-    
-    all_entries = client.entries({'content_type': 'project'})
-    all_projects = [map_project_entry(entry) for entry in all_entries]
-    
-    categories = sorted(list(set(p['category'] for p in all_projects if p['category'])))
-    return render_template('portfolio.html', projects=all_projects, categories=categories)
+    categories = sorted(list(set(p['category'] for p in projects_data)))
+    return render_template('portfolio.html', projects=projects_data, categories=categories)
 
-# Rute lain (harga, tentang, kontak) tetap sama karena kontennya statis
+@app.route('/portfolio/<slug>')
+def portfolio_detail(slug):
+    project = next((p for p in projects_data if p['slug'] == slug), None)
+    if project is None: abort(404)
+    return render_template('portfolio_detail.html', project=project)
+
 @app.route('/harga')
 def price_list():
     return render_template('harga.html')
@@ -83,14 +88,21 @@ def price_list():
 def about():
     return render_template('tentang.html')
 
-@app.route('/kontak', methods=['GET', 'POST']):
-    # ... (logika kontak tidak berubah)
-    pass
+# --- PERBAIKAN DI BARIS DI BAWAH INI ---
+@app.route('/kontak', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        print(f"Pesan Baru Diterima dari {name} ({email}):\n{message}")
+        return render_template('kontak_sukses.html')
+    return render_template('kontak.html')
+# --- AKHIR PERBAIKAN ---
     
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    # Untuk testing lokal, Anda perlu set environment variables di terminal dulu
     app.run(debug=True)
