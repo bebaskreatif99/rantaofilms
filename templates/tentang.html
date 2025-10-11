@@ -1,30 +1,17 @@
 {% extends 'layout.html' %}
-
-{% block title %}Tentang Kami - Rantaoe Films{% endblock %}
-
+{% block title %}Tentang Kami - RantaoFilms{% endblock %}
 {% block content %}
-<section class="about-page container">
+<section class="page-header container hidden">
+    <h1>Tentang RantaoFilms</h1>
+    <p class="tagline">Momen Anda, Cerita Kami.</p>
+</section>
+<section class="about-page container hidden" style="transition-delay: 100ms;">
     <div class="about-content">
         <div class="about-text">
-            <h2>Tentang Rantaoe Films</h2>
-            <p>Rantaoe Films lahir dari hasrat untuk bercerita. Kami percaya setiap momen, besar atau kecil, memiliki cerita yang layak untuk diabadikan dengan indah. Tim kami terdiri dari para profesional kreatif yang berdedikasi untuk menghasilkan karya visual yang tidak hanya memukau tetapi juga menyentuh hati.</p>
-            <h3>Misi Kami</h3>
-            <p>Misi kami adalah memberikan pengalaman sinematik yang personal dan profesional, menangkap esensi cerita Anda dan mengubahnya menjadi karya seni yang tak lekang oleh waktu.</p>
+            <p>Selamat datang di RantaoFilms! Kami adalah tim fotografer dan videografer profesional yang bersemangat dalam mengabadikan momen-momen paling berharga dalam hidup. Didirikan pada tahun 2020, RantaoFilms lahir dari kecintaan kami terhadap seni bercerita melalui visual.</p>
+            <p>Bagi kami, setiap pernikahan, acara, atau produk memiliki cerita uniknya sendiri. Misi kami adalah menangkap esensi dari cerita tersebut dan mengubahnya menjadi karya seni yang tak lekang oleh waktu.</p>
         </div>
-        <div class="about-image">
-            <img src="{{ url_for('static', filename='images/team.jpg') }}" alt="Tim Rantaoe Films">
-        </div>
-    </div>
-
-    <div class="contact-section">
-        <h2>Hubungi Kami</h2>
-        <p>Punya proyek dalam pikiran? Mari kita wujudkan bersama.</p>
-        <form action="/submit_form" method="post" class="contact-form">
-            <input type="text" name="name" placeholder="Nama Anda" required>
-            <input type="email" name="email" placeholder="Email Anda" required>
-            <textarea name="message" rows="5" placeholder="Pesan Anda" required></textarea>
-            <button type="submit" class="cta-button">Kirim Pesan</button>
-        </form>
+        <div class="about-image"><img src="{{ url_for('static', filename=site.team_photo) }}" alt="Tim RantaoFilms"></div>
     </div>
 </section>
 {% endblock %}

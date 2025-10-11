@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}{{ project.title }} - RantaoFilms{% endblock %}
+{% block content %}
+<section class="project-detail-header hidden" style="background-image: url('{{ url_for('static', filename=project.cover_image) }}');">
+    <div class="hero-overlay"></div>
+    <div class="container project-title-wrapper">
+        <span class="project-category-tag">{{ project.category }}</span>
+        <h1>{{ project.title }}</h1>
+        <p class="project-date">Tanggal Proyek: {{ project.project_date }}</p>
+    </div>
+</section>
+<section class="project-detail-content container hidden" style="transition-delay: 200ms;">
+    <div class="project-description"><h2>Tentang Proyek</h2><p>{{ project.description }}</p></div>
+    {% if project.video_url %}<div class="project-video"><h2>Video Highlight</h2><div class="video-responsive"><iframe src="{{ project.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>{% endif %}
+    {% if project.images %}<div class="project-gallery"><h2>Galeri Foto</h2><div class="gallery-grid">{% for image in project.images %}<div class="gallery-item"><img src="{{ url_for('static', filename=image) }}" alt="Foto galeri untuk {{ project.title }}"></div>{% endfor %}</div></div>{% endif %}
+    <div class="back-to-portfolio"><a href="/portfolio" class="cta-button-outline">&larr; Kembali ke Portfolio</a></div>
+</section>
+{% endblock %}

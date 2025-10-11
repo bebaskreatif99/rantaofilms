@@ -1,38 +1,58 @@
 {% extends 'layout.html' %}
-
-{% block title %}Rantaoe Films - Home{% endblock %}
+{% block title %}RantaoFilms - Abadikan Momen, Ciptakan Cerita Abadi{% endblock %}
 
 {% block content %}
-    <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content container">
-            <h1>Seni Bercerita Visual</h1>
-            <p>Kami mengubah momen menjadi kenangan sinematik abadi. Dari pernikahan hingga profil perusahaan, cerita Anda adalah mahakarya kami.</p>
-            <a href="/portfolio" class="cta-button">Jelajahi Karya Kami</a>
+<section class="hero">
+    <video autoplay muted loop playsinline id="hero-video">
+        <source src="{{ url_for('static', filename='videos/hero-video.mp4') }}" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+        <h1 class="hidden">Abadikan Momen, Ciptakan Cerita Abadi</h1>
+        <p class="hidden" style="transition-delay: 100ms;">Layanan fotografi dan videografi profesional untuk setiap momen berharga dalam hidup Anda.</p>
+        <div class="hidden" style="transition-delay: 200ms;">
+            <a href="/portfolio" class="cta-button">Lihat Portofolio</a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="featured-work container">
-        <h2>Karya Unggulan</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <img src="{{ url_for('static', filename='images/wedding1.jpg') }}" alt="Wedding Clip">
-                <div class="card-overlay">
-                    <h3>Wedding Clip: A & B</h3>
-                </div>
-            </div>
-             <div class="project-card">
-                <img src="{{ url_for('static', filename='images/company1.jpg') }}" alt="Company Profile">
-                 <div class="card-overlay">
-                    <h3>Company Profile: XYZ Corp</h3>
-                </div>
-            </div>
-             <div class="project-card">
-                <img src="{{ url_for('static', filename='images/film1.jpg') }}" alt="Short Film">
-                 <div class="card-overlay">
-                    <h3>Short Film: "Jendela"</h3>
-                </div>
-            </div>
+<section class="why-us container hidden">
+    <div class="section-header">
+        <h2>Mengapa Memilih RantaoFilms?</h2>
+        <p>Di RantaoFilms, kami percaya setiap momen adalah sebuah "rantau"—perjalanan unik yang layak diceritakan dengan indah. Kami bukan sekadar penyedia jasa, tapi kami adalah partner Anda dalam mengabadikan perjalanan tersebut.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-item hidden"><i class="fas fa-film"></i><h3>Narasi Visual yang Bercerita</h3><p>Tim kami adalah para storyteller yang terlatih untuk menemukan alur cerita dalam setiap momen.</p></div>
+        <div class="feature-item hidden" style="transition-delay: 100ms;"><i class="fas fa-layer-group"></i><h3>Satu Jendela untuk Semua</h3><p>Solusi terintegrasi untuk Wedding, Branding, hingga Social Media dalam satu atap kreatif.</p></div>
+        <div class="feature-item hidden" style="transition-delay: 200ms;"><i class="fas fa-palette"></i><h3>Estetika Sinematik</h3><p>Kami membawa standar sinema ke dalam setiap proyek dengan komposisi artistik dan color grading berkarakter.</p></div>
+    </div>
+</section>
+
+<section class="featured-work hidden">
+    <div class="container">
+        <div class="section-header">
+            <h2>Karya Unggulan Kami</h2>
         </div>
-    </section>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <a href="{{ url_for('portfolio_detail', slug=project.slug) }}" class="project-card hidden" style="transition-delay: {{ loop.index * 100 }}ms;">
+                <img src="{{ url_for('static', filename=project.cover_image) }}" alt="{{ project.title }}">
+                <div class="card-overlay">
+                    <h3>{{ project.title }}</h3>
+                    <span>{{ project.category }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="text-center hidden" style="margin-top: 3rem;">
+            <a href="/portfolio" class="cta-button-outline">Lihat Semua Karya</a>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section container hidden">
+    <h2>Siap Mewujudkan Visi Anda?</h2>
+    <p>Hubungi kami hari ini untuk konsultasi gratis mengenai proyek Anda.</p>
+    <a href="/kontak" class="cta-button">Diskusikan Proyek</a>
+</section>
 {% endblock %}
