@@ -8,9 +8,9 @@ app = Flask(__name__)
 # =====================================================================
 
 site_data = {
-    "instagram_url": "https://www.instagram.com/NAMA_INSTAGRAM_ANDA",
-    "tiktok_url": "https://www.tiktok.com/@NAMA_TIKTOK_ANDA",
-    "whatsapp_url": "https://wa.me/6281234567890", # Ganti dengan nomor Anda
+    "instagram_url": "https://www.instagram.com/andreesnrt_",
+    "tiktok_url": "https://www.tiktok.com/andreesnrt",
+    "whatsapp_url": "https://wa.me/6281354704624", # Ganti dengan nomor Anda
     "logo": "img/logo.png",
     "team_photo": "img/tim-rantaofilms.png"
 }
