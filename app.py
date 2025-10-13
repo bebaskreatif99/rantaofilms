@@ -27,6 +27,7 @@ projects_data = [
             "img/portfolio/wedding-01.jpg", # NAMA FILE BARU
             "img/portfolio/wedding-02.jpg", # NAMA FILE BARU
             "img/portfolio/wedding-03.jpg"  # NAMA FILE BARU
+            
         ],
         "is_featured": True,
     },
